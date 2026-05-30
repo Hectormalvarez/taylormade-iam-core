@@ -6,8 +6,12 @@ build-windows-core/
 
 .packer/
 packer_cache/
+packer/packer-vm-tmp/
+packer/build-artifacts/
+*.pkrvars.hcl
 
 .vagrant/
+
 
 .terraform/
 *.tfstate

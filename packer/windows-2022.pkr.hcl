@@ -4,13 +4,17 @@ packer {
       version = ">= 1.1.4"
       source  = "github.com/hashicorp/qemu"
     }
+    vagrant = {
+      version = ">= 1.1.0"
+      source  = "github.com/hashicorp/vagrant"
+    }
   }
 }
 
 source "qemu" "windows_core" {
   iso_url          = var.iso_local_path
   iso_checksum     = "none"
-  output_directory = "../build-windows-core"
+  output_directory = "./packer-vm-tmp"
   
   cpus             = 2
   memory           = 4096
@@ -42,5 +46,11 @@ build {
     inline = [
       "Write-Output 'Base Windows Server Core image build complete.'"
     ]
+  }
+
+  post-processor "vagrant" {
+    output               = "./build-artifacts/windows-2022-core-{{.Provider}}.box"
+    keep_input_artifact  = false
+    compression_level    = 9
   }
 }
